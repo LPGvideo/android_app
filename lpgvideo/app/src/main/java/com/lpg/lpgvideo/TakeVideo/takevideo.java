@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.lpg.lpgvideo.R;
+
 public class takevideo extends AppCompatActivity {
 
     @Override
