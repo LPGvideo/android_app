@@ -41,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
         Item item = mItemArrayList.get(position);
         holder.name.setText(item.studentId);
         holder.author.setText(item.username);
-        holder.time.setText(item.time);
+        holder.time.setText(item.time);//TODO:只需要显示日期
 
         //RequestOptions options = new RequestOptions();
 
