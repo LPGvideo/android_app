@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lpg.lpgvideo.R;
-
+//TODO: 给每个Item加上背景
 public class ItemHolder extends RecyclerView.ViewHolder {
     TextView name, author, time;
     ImageView cover;
