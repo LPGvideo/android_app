@@ -4,17 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lpg.lpgvideo.FetchInfoStream.FetchPojo;
 import com.lpg.lpgvideo.FetchInfoStream.FetchService;
 import com.lpg.lpgvideo.FetchInfoStream.Item;
 import com.lpg.lpgvideo.FetchInfoStream.ItemAdapter;
 import com.lpg.lpgvideo.FetchInfoStream.SearchLayout;
+import com.lpg.lpgvideo.TakeVideo.takevideo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-//TODO: mainactivity变成Fragment以及加入开屏和登录
 public class MainActivity extends AppCompatActivity {
-
+    //TODO ：1.修复主页需要触发才能加载的问题 2.加入登录页面（开屏LOGO）
     private List<Item> mItems = new ArrayList<>();
     private final Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api-sjtu-camp.bytedance.com/").
             addConverterFactory(GsonConverterFactory.create()).build();
@@ -66,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
                 itemViewAdapter.dataChangedHandler(tmpItemLists);
             }
         });
+
+        FloatingActionButton beginTakeVideoButton = findViewById(R.id.fab);
+        beginTakeVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, takevideo.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

@@ -1,7 +1,9 @@
 package com.lpg.lpgvideo.FetchInfoStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lpg.lpgvideo.MainActivity;
+import com.lpg.lpgvideo.PlayRemoteVideo.PlayVideoActivity;
 import com.lpg.lpgvideo.R;
 
 import java.util.ArrayList;
@@ -41,8 +44,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
         Item item = mItemArrayList.get(position);
         holder.name.setText(item.studentId);
         holder.author.setText(item.username);
-        holder.time.setText(item.time);//TODO:只需要显示日期
-
+        String shortTime = item.time.substring(0,10);
+        holder.time.setText(shortTime);
+        holder.cover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PlayVideoActivity.class);
+                intent.putExtra("videoUrl",item.getVideoUrl());
+                v.getContext().startActivity(intent);
+            }
+        });
         //RequestOptions options = new RequestOptions();
 
         Glide.with(mView.getContext()).load(item.imageUrl).into(holder.cover);
