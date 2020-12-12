@@ -3,11 +3,17 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ImageView
+        android:id="@+id/login_bgd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_background"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/login_bgd">
         <LinearLayout
             android:id="@+id/layout_stu_id"
             android:layout_width="wrap_content"
@@ -48,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:src="@drawable/ic__login"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
