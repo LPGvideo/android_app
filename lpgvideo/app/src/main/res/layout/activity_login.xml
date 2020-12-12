@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+        <LinearLayout
+            android:id="@+id/layout_stu_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/login_student_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学    号"/>
+            <EditText
+                android:id="@+id/login_edit_stuid"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_stu_id"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/login_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"/>
+
+            <EditText
+                android:id="@+id/login_edit_username"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/button_login"
+            android:layout_below="@+id/layout_username"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/ic__login"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

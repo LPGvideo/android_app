@@ -31,7 +31,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/cancel_button"
+            android:layout_toRightOf="@id/my_account"
             android:layout_centerVertical="true"/>
+       <ImageView
+           android:id="@+id/my_account"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:src="@drawable/ic_account"
+           android:layout_centerVertical="true"/>
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
