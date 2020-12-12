@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".PlayRemoteVideo.PlayVideoActivity">
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <com.lpg.lpgvideo.PlayRemoteVideo.HeartView
+        android:id="@+id/heart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
