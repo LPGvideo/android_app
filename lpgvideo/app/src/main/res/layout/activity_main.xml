@@ -44,12 +44,19 @@
                 android:src="@drawable/ic_account" />
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="#ffc0cb" />
+      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+          android:id="@+id/swipe"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/recycler_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp"
+              android:background="#ffc0cb" />
+      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

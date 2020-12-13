@@ -17,7 +17,6 @@
         android:theme="@style/Theme.Lpgvideo">
         <activity android:name=".Upload.LoadingActivity"></activity>
         <activity android:name=".Upload.UploadActivity" />
-        <activity android:name=".Camera.mCameraActivity" />
         <activity android:name=".FetchInfoStream.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -94,7 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"\n 当前学号："+ LoginActivity.getStudentId()+"\n 当前用户名："+LoginActivity.getUserName(),Toast.LENGTH_SHORT).show();
             }
         });
-
+        SwipeRefreshLayout s = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        s.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initItems();
+                itemViewAdapter.dataChangedHandler(mItems);
+                s.setRefreshing(false);
+            }
+        });
 
     }
 

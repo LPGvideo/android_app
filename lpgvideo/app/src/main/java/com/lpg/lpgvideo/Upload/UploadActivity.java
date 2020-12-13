@@ -2,6 +2,8 @@ package com.lpg.lpgvideo.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 
 import com.lpg.lpgvideo.FetchInfoStream.LoginActivity;
@@ -9,13 +11,11 @@ import com.lpg.lpgvideo.R;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lpg.lpgvideo.R;
 import com.lpg.lpgvideo.Upload.Interface.videoService;
 
 import java.io.ByteArrayOutputStream;
@@ -42,10 +42,11 @@ public class UploadActivity extends AppCompatActivity {
             connectTimeout(60, TimeUnit.SECONDS).
             readTimeout(60, TimeUnit.SECONDS).
             writeTimeout(60, TimeUnit.SECONDS).build();
-    private final String mPath = getIntent().getStringExtra("path");
+    private  String mPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPath  = getIntent().getStringExtra("path");
         setContentView(R.layout.activity_upload);
         Button postButton = findViewById(R.id.button_post);
         TextView listsText = findViewById(R.id.text_lists);
@@ -54,20 +55,25 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(UploadActivity.this, LoadingActivity.class);
                 startActivity(intent);
-                MultipartBody.Part imagePart = getAssets("cover_image");
-                MultipartBody.Part videoPart = getAssets("video");
+                MultipartBody.Part imagePart = getAssets2();
+                MultipartBody.Part videoPart = getAssets1("video");
 
                 videoService videoService = retrofit.create(videoService.class);
-                Call<PostResult> call = videoService.postVideo(LoginActivity.getStudentId(),LoginActivity.getUserName(),"",imagePart,videoPart);
+                Call<PostResult> call = videoService.postVideo(LoginActivity.getStudentId(),LoginActivity.getUserName(),"777",imagePart,videoPart);
                 call.enqueue(new Callback<PostResult>() {
                     @Override
                     public void onResponse(Call<PostResult> call, Response<PostResult> response) {
                         LoadingActivity.setmProgress(100);
-                        Log.d("main", "onResponse: 上传完毕");
+                        if (response.body().isSuccessful()) {
+                            Log.d("main", "onResponse: 上传完毕");
+                        } else {
+                            Log.d("main", "onResponse: 失败");
+                        }
                     }
                     @Override
                     public void onFailure(Call<PostResult> call, Throwable t) {
                         listsText.setText("上传失败\n");
+                        Log.d("main", "onResponse: 上传失败");
                         t.printStackTrace();
                     }
                 });
@@ -75,14 +81,14 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
-    private MultipartBody.Part getAssets( String partKey) {
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),fileNameToByte());
+    private MultipartBody.Part getAssets1( String partKey) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),fileNameToByte1(partKey));
         return MultipartBody.Part.createFormData(partKey,mPath,requestFile);
     }
 
-    private byte[]  fileNameToByte() {
+    private byte[]  fileNameToByte1(String key) {
         try {
-            final File file = new File(mPath);
+            File file= new File(mPath);
             final InputStream inputStream = new FileInputStream(file);
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
             byte[] buffer = new byte[40960];
@@ -90,10 +96,37 @@ public class UploadActivity extends AppCompatActivity {
             while (-1 != (n = inputStream.read(buffer))) {
                 output.write(buffer, 0, n);
             }
+
             return output.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
             return new byte[1];
         }
+    }
+
+
+    private MultipartBody.Part getAssets2() {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),fileNameToByte2("cover_image.png"));
+        return MultipartBody.Part.createFormData("cover_image", "cover_image.png",requestFile);
+    }
+
+    private byte[]  fileNameToByte2(String filename) {
+
+//            final AssetManager assetManager = this.getAssets();
+//            final InputStream inputStream = assetManager.open(filename);
+//            final ByteArrayOutputStream output = new ByteArrayOutputStream();
+//            byte[] buffer = new byte[40960];
+//            int n = 0;
+//            while (-1 != (n = inputStream.read(buffer))) {
+//                output.write(buffer, 0, n);
+//            }
+            final ByteArrayOutputStream output = new ByteArrayOutputStream();
+            Bitmap bitmap = null;
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(mPath);
+            bitmap = mediaMetadataRetriever.getFrameAtTime(-1);
+            mediaMetadataRetriever.release();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,output);
+            return output.toByteArray();
     }
 }
