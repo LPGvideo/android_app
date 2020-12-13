@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lpgvideo">
+        android:theme="@style/Theme.Lpgvideo"
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".Camera.mCameraActivity" />
         <activity android:name=".FetchInfoStream.LoginActivity">
             <intent-filter>

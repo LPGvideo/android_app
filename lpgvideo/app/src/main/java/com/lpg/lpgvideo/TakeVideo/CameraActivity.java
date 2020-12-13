@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -85,17 +86,17 @@ public class CameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                if (isAndroidQ) {
-                    // Android 10 使用图片uri加载
-                    ivPhoto.setImageURI(mCameraUri);
-                } else {
-                    // 使用图片路径加载
-                    ivPhoto.setImageBitmap( BitmapFactory.decodeFile(mCameraImagePath));
-                }
-            } else {
-                Toast.makeText(this, "取消", Toast.LENGTH_LONG).show();
-            }
+//            if (resultCode == RESULT_OK) {
+//                if (isAndroidQ) {
+//                    // Android 10 使用图片uri加载
+//                    ivPhoto.setImageURI(mCameraUri);
+//                } else {
+//                    // 使用图片路径加载
+//                    ivPhoto.setImageBitmap( BitmapFactory.decodeFile(mCameraImagePath));
+//                }
+//            } else {
+//                Toast.makeText(this, "取消", Toast.LENGTH_LONG).show();
+//            }
         }
     }
 
@@ -130,31 +131,34 @@ public class CameraActivity extends AppCompatActivity {
             File photoFile = null;
             Uri photoUri = null;
 
-            if (isAndroidQ) {
-                // 适配android 10
-                photoUri = createImageUri();
-            } else {
+//            if (isAndroidQ) {
+//                // 适配android 10
+//                photoUri = createImageUri();
+//            } else {
                 try {
                     photoFile = createImageFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+            Log.d( "file", "openCamera: "+ photoFile.getAbsolutePath() );
                 if (photoFile != null) {
                     mCameraImagePath = photoFile.getAbsolutePath();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
                         photoUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", photoFile);
+                        grantUriPermission(getPackageName(),photoUri,Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        captureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     } else {
                         photoUri = Uri.fromFile(photoFile);
                     }
                 }
-            }
+//            }
 
             mCameraUri = photoUri;
             if (photoUri != null) {
                 captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                captureIntent.putExtra( MediaStore.EXTRA_DURATION_LIMIT,15 );
                 startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
             }
         }
@@ -182,15 +186,17 @@ public class CameraActivity extends AppCompatActivity {
      * @throws IOException
      */
     private File createImageFile() throws IOException {
-        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        //String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageName = "lpg";
+        File storageDir = getExternalFilesDir("/lalala/");
         if (!storageDir.exists()) {
             storageDir.mkdir();
         }
-        File tempFile = new File(storageDir, imageName);
+        File tempFile = new File(storageDir, "VID_" +imageName+ ".mp4");
         if (!Environment.MEDIA_MOUNTED.equals( EnvironmentCompat.getStorageState(tempFile))) {
             return null;
         }
+        Log.d( "File", "createImageFile: ok" +tempFile.getAbsolutePath());
         return tempFile;
     }
 }
