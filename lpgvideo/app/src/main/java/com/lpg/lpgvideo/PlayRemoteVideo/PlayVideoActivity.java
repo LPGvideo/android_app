@@ -1,6 +1,7 @@
 package com.lpg.lpgvideo.PlayRemoteVideo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.lpg.lpgvideo.R;
@@ -18,6 +20,7 @@ import com.lpg.lpgvideo.R;
 public class PlayVideoActivity extends AppCompatActivity {
     private VideoView videoView;
     private View heart;
+    private ContentLoadingProgressBar progressBar;
     private AnimatorSet animatorSet;
 
     @Override
@@ -28,6 +31,16 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         videoView = findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse(getIntent().getStringExtra("videoUrl")));
+
+        progressBar = findViewById(R.id.progressBar);
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                progressBar.onDetachedFromWindow();
+            }
+        }
+
+        );
 
         MediaController controller = new MediaController(this);
         videoView.setMediaController(controller);
@@ -52,14 +65,14 @@ public class PlayVideoActivity extends AppCompatActivity {
 
                 //x方向
                 ObjectAnimator animator2x = ObjectAnimator.ofFloat(heart,
-                        "scaleX", 1, 2);
+                        "scaleX", 1, 4);
                 //animator2x.setRepeatCount(1);
                 animator2x.setDuration(250);
                 animator2x.setRepeatMode(ObjectAnimator.RESTART);
 
                 //y方向
                 ObjectAnimator animator2y = ObjectAnimator.ofFloat(heart,
-                        "scaleY", 1, 2);
+                        "scaleY", 1, 4);
                 //animator2y.setRepeatCount(1);
                 animator2y.setDuration(250);
                 animator2y.setRepeatMode(ObjectAnimator.RESTART);
