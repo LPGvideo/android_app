@@ -11,10 +11,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lpgvideo"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/Theme.Lpgvideo">
+        <activity android:name=".Upload.LoadingActivity"></activity>
+        <activity android:name=".Upload.UploadActivity" />
         <activity android:name=".Camera.mCameraActivity" />
         <activity android:name=".FetchInfoStream.LoginActivity">
             <intent-filter>
