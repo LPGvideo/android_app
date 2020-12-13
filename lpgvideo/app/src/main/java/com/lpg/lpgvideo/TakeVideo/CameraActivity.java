@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lpg.lpgvideo.R;
+import com.lpg.lpgvideo.Upload.UploadActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +48,7 @@ public class CameraActivity extends AppCompatActivity {
 
 //    用于保存图片的文件路径，Android 10以下使用图片路径访问图片
     private String mCameraImagePath;
+
 
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
 
@@ -86,6 +88,9 @@ public class CameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE) {
+            Intent intent = new Intent(CameraActivity.this, UploadActivity.class);
+            intent.putExtra("path",mCameraImagePath);
+            startActivity(intent);
 //            if (resultCode == RESULT_OK) {
 //                if (isAndroidQ) {
 //                    // Android 10 使用图片uri加载
