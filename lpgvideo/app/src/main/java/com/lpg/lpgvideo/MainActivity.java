@@ -24,7 +24,7 @@ import com.lpg.lpgvideo.FetchInfoStream.Item;
 import com.lpg.lpgvideo.FetchInfoStream.ItemAdapter;
 import com.lpg.lpgvideo.FetchInfoStream.LoginActivity;
 import com.lpg.lpgvideo.FetchInfoStream.SearchLayout;
-import com.lpg.lpgvideo.TakeVideo.takevideo;
+import com.lpg.lpgvideo.TakeVideo.CameraActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         beginTakeVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, takevideo.class);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });

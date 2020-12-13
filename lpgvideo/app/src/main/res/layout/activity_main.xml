@@ -5,48 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10sp">
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="70sp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:shadowColor="@color/white"
-            android:outlineSpotShadowColor="@color/white"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-            android:text="取消"
-            android:textSize="15sp"/>
-        <com.lpg.lpgvideo.FetchInfoStream.SearchLayout
-            android:id="@+id/search_layout"
+            android:padding="10sp">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="70sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:shadowColor="@color/white"
+                android:text="取消"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <com.lpg.lpgvideo.FetchInfoStream.SearchLayout
+                android:id="@+id/search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/cancel_button"
+                android:layout_toRightOf="@id/my_account" />
+
+            <ImageView
+                android:id="@+id/my_account"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_account" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/cancel_button"
-            android:layout_toRightOf="@id/my_account"
-            android:layout_centerVertical="true"/>
-       <ImageView
-           android:id="@+id/my_account"
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:src="@drawable/ic_account"
-           android:layout_centerVertical="true"/>
-    </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="#ffc0cb"/>
-</LinearLayout>
+            android:layout_margin="5dp"
+            android:background="#ffc0cb" />
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

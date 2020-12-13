@@ -10,14 +10,11 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Surface;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -29,7 +26,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraActivity extends AppCompatActivity {
+public class mCameraActivity extends AppCompatActivity {
 
     int REQUEST_IMAGE_CAPTURE = 0;
     int REQUEST_VIDEO_CAPTURE = 0;
@@ -51,10 +48,10 @@ public class CameraActivity extends AppCompatActivity {
         videoView= findViewById(R.id.video);
         try {
 
-            if(ContextCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission( mCameraActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                 dispatchTakePictureIntent();
             }else {
-                ActivityCompat.requestPermissions(CameraActivity.this , new String[]{Manifest.permission.CAMERA},PERMISSION_CAMERA_REQUEST_CODE);
+                ActivityCompat.requestPermissions( mCameraActivity.this , new String[]{Manifest.permission.CAMERA},PERMISSION_CAMERA_REQUEST_CODE);
             }
 
         } catch (IOException exception) {
