@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lpgvideo">
-        <activity android:name=".PlayRemoteVideo.PlayVideoActivity"></activity>
+        <activity android:name=".UploadingVideo.LoadingActivity"></activity>
+        <activity android:name=".UploadingVideo.UploadActivity" />
+        <activity android:name=".PlayRemoteVideo.PlayVideoActivity" />
         <activity android:name=".TakeVideo.takevideo" />
         <activity android:name=".MainActivity">
             <intent-filter>
