@@ -27,7 +27,7 @@ public class PlayVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
-        Log.d("play_video", "onCreate: "+ getIntent().getStringExtra("videoUrl"));
+//        Log.d("play_video", "onCreate: "+ getIntent().getStringExtra("videoUrl"));
 
         videoView = findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse(getIntent().getStringExtra("videoUrl")));
@@ -60,7 +60,7 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         videoView.setOnClickListener(new DoubleClickListener() {
             @Override
-            public void onMultiClick(View v) {
+            public void doubleClick(View v) {
                 heart.setAlpha(1f);
 
                 //x方向
@@ -109,26 +109,55 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         // 两次点击按钮之间的点击间隔
         private static final int MIN_CLICK_DELAY_TIME = 250;
-        private long lastClickTime;
+        private long firstClickTime = 0;
+        private long secondClickTime = 0;
+        private boolean isDoubleClick;
 
-        public abstract void onMultiClick(View v);
+        public abstract void doubleClick(View v);
 
-        public abstract void  oneClick(View v);
+        public abstract void oneClick(View v);
 
 
-        @Override
-        public void onClick(View v) {
-            long curClickTime = System.currentTimeMillis();
-            if ((curClickTime - lastClickTime) <= MIN_CLICK_DELAY_TIME) {
-                onMultiClick(v);
-            } else {
-                //TODO:单击双击冲突问题
-                lastClickTime = curClickTime;
-                oneClick(v);
-            }
+//        @Override
+//        public void onClick(View v) {
+//            long curClickTime = System.currentTimeMillis();
+//            if ((curClickTime - lastClickTime) <= MIN_CLICK_DELAY_TIME) {
+//                onMultiClick(v);
+//            } else {
+//                lastClickTime = curClickTime;
+//                oneClick(v);
+//            }
+
+            @Override
+            public void onClick(View v) {
+                if (firstClickTime > 0) {
+                    secondClickTime = System.currentTimeMillis();
+                    if (secondClickTime - firstClickTime < MIN_CLICK_DELAY_TIME) {
+                        doubleClick(v);//双击回调
+                        firstClickTime = 0;
+                        isDoubleClick = true;
+                        return;
+                    }
+                }
+
+                firstClickTime = System.currentTimeMillis();
+                isDoubleClick = false;
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(MIN_CLICK_DELAY_TIME);
+                            firstClickTime = 0;
+                            if (!isDoubleClick) {
+                                oneClick(v);//单击回调
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
         }
     }
-
-
-
 }
